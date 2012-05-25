@@ -16,7 +16,7 @@ Tree.io running.
  1. run ``pip install treeio-achievements``
  #. add ``achievements`` to your ``INSTALLED_APPS``
  #. add the following line to your urls.py
- 	``(r'^achievements/', include('achievements.urls')),``
+ ``(r'^achievements/', include('achievements.urls')),``
  #. run ``python manage.py migrate achievements``
 	
 And that should do the trick.
