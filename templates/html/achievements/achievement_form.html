@@ -1,0 +1,36 @@
+<!--
+Template for the Achievement edit and create view (can be used as both)
+It has a security check, so that edit/delete are only visible to admins. (Usually only admins should see this though...)
+-->
+{% extends "html/achievements/page.html" %}
+
+{% block title %}{% trans %}Achievement{% endtrans %}{% endblock %}
+{% block module_subtitle %}{{ achievement }}{% endblock %}
+
+{% block module_topmenu %}
+{% if form.instance.id != None %}
+	<a href="{% url achievements_achievement_detail form.instance.id %}" class="top-menu view-link view-link">{% trans %}View{% endtrans %}</a>
+	{% if user.get_profile().is_admin(module_name='achievements') %}
+		<a href="{% url achievements_achievement_edit form.instance.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+		<a href="{% url achievements_achievement_delete form.instance.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+	{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+<form action="" method="post" class="content-form" enctype="multipart/form-data">
+	{% csrf_token %}
+		<ul class="content-form-fields">
+			{{ form.as_ul()|htsafe }}
+		</ul>
+		<div class="content-form-submit">
+			<!-- if in edit mode, it's save, in add mode it's create -->
+			{% if form.instance.id != None %}
+				<input type="submit" name="save" value="{% trans %}Save Achievement{% endtrans %}"/>
+			{% else %}
+				<input type="submit" name="save" value="{% trans %}Create Achievement{% endtrans %}"/>
+			{% endif %}
+			<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+		</div>
+</form>
+{% endblock %}

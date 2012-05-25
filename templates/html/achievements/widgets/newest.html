@@ -1,0 +1,74 @@
+<!--
+This is the Template for the Dashboard-Widget. It is a pretty simple template, as it should be clear
+at one glance what is going on. It provides links to more information though.
+The CSS is in a style tag because Tree.io has no way to include .css files.
+-->
+{% extends "html/base_widget.html" %}
+
+{% block widget_title %}{% trans %}Newest Achievements{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+<style type="text/css">
+<!--
+.achievements_widget_box {
+	padding: 10px;
+	min-height: 140px;
+}
+.achievements_widget_box .badge {
+	height: 140px;
+	min-height: 140px;
+	max-width: 140px;
+	float: left;
+}
+.achievements_widget_box .congratulations {
+	margin-left: 140px;
+	padding-left: 20px;
+	font-size: 14px;
+}
+.achievements_widget_box .username {
+	font-size: 20px;
+}
+.achievements_widget_box .aname {
+	font-size: 25px;
+	font-weight: bold;
+}
+.achievements_widget_box .reason {
+	font-size: 15px;
+	font-style: italic;
+	padding: 5px;
+	color: grey;
+}
+.achievements_widget_box .icon {
+	height: 15px;
+	width: 15px;
+}
+-->
+</style>
+{% for a in achievements %}
+<div class="achievements_widget_box">
+	{% if a.prototype.badge %}
+		<img src="{{ a.prototype.badge.url }}" class="badge" alt="Badge" />
+	{% else %}
+		<img src="/static/messaging/pic.png" class="badge" alt="Badge" />
+	{% endif %}
+	<div class="congratulations">
+		<span class="username">
+			<a href="{% url achievements_user_view a.user.id %}">{{ a.user.get_username() }}</a>
+		</span>
+		<br />
+		has been awarded
+		<br />
+		<span class="aname">
+			<a href="{% url achievements_prototype_detail a.prototype.id %}">{{ a.prototype.title }}</a>
+		</span>
+		{% if a.prototype.icon %}
+			<img src="{{ a.prototype.icon.url }}" class="icon" alt="Icon"/>
+		{% endif %}
+		<br />
+		{% if a.text %}
+			<span class="reasontitle">Reason:</span><br /><span class="reason">{{ a.text|striptags }}</span>
+		{% endif %}
+	</div>
+</div>
+{% endfor %}
+{% endblock %}

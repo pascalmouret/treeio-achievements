@@ -1,0 +1,100 @@
+<!--
+This defines the layout and CSS of the entire module. Except for the tags, all templates here will inherit this
+template. It mostly defines blocks to be used, which makes writing the other easier.
+-->
+{% extends "html/page.html" %}
+
+<!-- content of the <title> tag-->
+{% block title %}{% trans %}Achievements{% endtrans %}{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	<!--
+	#achievements_user_box {
+		height: 90px;
+	}
+
+	#achievements_user_box .contact-picture {
+		min-height: 64px;
+		min-width: 64px;
+	}
+
+	#achievements_user_box h4 {
+		margin-left: 90px;
+	}
+
+	#achievements_proto_head .badge {
+		height: 140px;
+		width: 140px;
+		min-height: 140px;
+		max-width: 140px;
+		float: left;
+	}
+
+	#achievements_proto_head .title {
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	#achievements_proto_head .icon {
+		height: 15px;
+		width: 15px;
+	}
+
+	#achievements_proto_head .description {
+		padding: 10px;
+		margin-left: 140px;
+	}
+	-->
+</style>
+<table>
+	<tr>
+		<!-- sidebar on the right -->
+		<td class="module-sidebar">
+			{{ logo_block_container() }}
+			<div>
+				<a href="{% url achievements %}" class="sidebar-link">
+					{% trans%}Users{% endtrans %}
+				</a>
+				<a href="{% url achievements_prototypes %}" class="sidebar-link">
+					{% trans%}Achievements{% endtrans %}
+				</a>
+			</div>
+		</td>
+		<!-- actuall content area -->
+		<td class="module-content">
+			<div class="module-content-fill">
+				<div class="title-block">
+					<!-- title -->
+					<div class="title">
+						{% block module_title %}{% trans %}Achievements{% endtrans %}{% endblock %}
+					</div>
+					<!-- written smaller after the title -->
+					<div class="subtitle-block">
+						{% block module_subtitle %}{% endblock %}
+					</div>
+					<!-- for all teh buttons in the title-thingy -->
+					<div class="module-top-menu-inline">
+						{% block module_topmenu %}{% endblock %}
+					</div>
+					{{ help_link() }}
+				</div>
+				<table>
+					<tr>
+						<!-- real content -->
+						<td class="module-content-inner">
+							{% block module_content %}{% endblock %}
+						</td>
+						<!-- sidebar to the left -->
+						<td class="module-sidebar-right">
+							{% block sidebar_right %}{% endblock %}
+						</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!--
+This template is used to generate a list of Achievements, at the moment only used in the user-profiles.
+It has permission-checks so certain interface-elements are only visible to admins.
+-->
+<!-- group them alphabetically -->
+{% for g in achievements|group_by_letter %}
+<h4 class="group-by-letter">{{g.0|upper}}</h4>
+{% for a in g.1 %}
+<div class="content-list-item content-list-item-even }}">
+	{% if user.get_profile().is_admin(module_name='achievements') %}
+	<div class="content-list-tick">
+		<input type="checkbox" name="mass-userachievement-{{ a.id }}" value="{{ a.id }}"
+				class="group-mass-unclassified"/>
+	</div>
+	{% endif %}
+	<span class="content-list-item-name">
+		<div class="contact-picture-frame">
+			{% if a.prototype.badge %}
+			<a href="{% url achievements_achievement_detail a.id %}">
+				<img class="contact-picture" src="{{ a.prototype.badge.url|htsafe }}" alt="" align="left"/>
+			</a>
+			{% else %}
+			<a href="{% url achievements_achievement_detail a.id %}">
+				<img class="contact-picture" src="/static/messaging/pic.png" alt="" align="left"/>
+			</a>
+			{% endif %}
+		</div>
+		<a href="{% url achievements_achievement_detail a.id %}">{{ a.prototype.title }}</a><br />
+		<a href="{% url achievements_achievement_detail a.id %}" class="small lighter">
+			<i>{% trans %}since:{% endtrans%} {{ a.timestamp }}</i>
+		</a>
+	</span>
+	<span class="content-list-item-actions">
+		{% if user.get_profile().is_admin(module_name='achievements') %}
+			<a href="{% url achievements_achievement_edit a.id %}" class="inline-link edit-link">
+				{% trans %}Edit{% endtrans%}
+			</a>
+		{% endif %}
+	</span>
+</div>
+{% endfor %}
+{% endfor %}

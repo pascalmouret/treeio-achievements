@@ -1,0 +1,42 @@
+<!--
+This is a very simple View of an Prototype-object.
+It has a security check, so that edit/delete are only visible to admins.
+-->
+{% extends "html/achievements/page.html" %}
+
+{% block title %}{{ prototype.title }} | {% trans %}Achievements{% endtrans %}{% endblock %}
+{% block module_subtitle %}{{ prototype.title }}{% endblock %}
+
+{% block module_topmenu %}
+	<a href="{% url achievements_prototype_detail prototype.id %}" class="top-menu view-link view-link-active">
+		{% trans %}View{% endtrans %}
+	</a>
+	{% if user.get_profile().is_admin(module_name='achievements') %}
+		<a href="{% url achievements_prototype_edit prototype.id %}" class="top-menu edit-link">
+			{% trans %}Edit{% endtrans %}
+		</a>
+		<a href="{% url achievements_prototype_delete prototype.id %}" class="top-menu delete-link">
+			{% trans %}Delete{% endtrans %}
+		</a>
+	{% endif %}
+{% endblock %}
+
+{% block module_content %}
+	<div id="achievements_proto_head">
+		{% if prototype.icon %}
+			<img src="{{ prototype.icon.url }}" alt="Icon" class="icon" />
+		{% endif %}
+		<span class="title">{{ prototype.title }}</span>
+		<div id="badge">
+			{% if prototype.badge %}
+				<img src="{{ prototype.badge.url }}" alt="Badge" class="badge" />
+			{% else %}
+				<img src="/static/messaging/pic.png" alt="Badge" class="badge" />
+			{% endif %}
+			<div class="description">
+				<!-- go on and render your HTML -->
+				{{ prototype.text|safe }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

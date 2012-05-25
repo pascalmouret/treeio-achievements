@@ -1,0 +1,41 @@
+<!--
+This template is used to generate a list of Prototypes, at the moment only used in the 'User'-View.
+It has permission-checks so certain interface-elements are only visible to admins.
+-->
+<!-- group them alphabetically -->
+{% for g in users|group_by_letter %}
+<h4 class="group-by-letter">{{g.0|upper}}</h4>
+{% for u in g.1 %}
+<div class="content-list-item content-list-item-even }}">
+	{% if user.get_profile().is_admin(module_name='achievements') %}
+		<div class="content-list-tick">
+			<input type="checkbox" name="mass-user-{{ u.id }}" value="{{ u.id }}" class="group-mass-unclassified" />
+		</div>
+	{% endif %}
+	<span class="content-list-item-name">
+		<!-- lets make those lines a bit shorter -->
+		{% set picture = u.get_contact().get_picture() %}
+		<div class="contact-picture-frame">
+			{% if picture %}
+				<a href="{% url achievements_user_view u.id %}">
+					<img class="contact-picture" src="{{ picture|htsafe }}" alt="" align="left" />
+				</a>
+			{% else %}
+				<a href="{% url achievements_user_view u.id %}">
+					<img class="contact-picture" src="/static/messaging/pic.png" alt="" align="left" />
+				</a>
+			{% endif %}
+		</div>
+		<a href="{% url achievements_user_view u.id %}">{{ u }}</a><br />
+		<a href="{% url achievements_user_view u.id %}" class="small lighter">
+			<i>{{ u.achievements }} {% trans %}Achievements{% endtrans %}</i>
+		</a>
+	</span>
+	<span class="content-list-item-actions">
+		{% if user.get_profile().is_admin(module_name='achievements') %}
+			<a href="{% url achievements_user_view u.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+		{% endif %}
+	</span>
+</div>
+{% endfor %}
+{% endfor %}

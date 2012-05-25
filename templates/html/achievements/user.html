@@ -1,0 +1,50 @@
+<!--
+This template renders the view for one single user. The most important part here is the list of Achievements the
+user has been awarded.
+It has permission-checks so certain interface-elements are only visible to admins.
+-->
+{% extends "html/achievements/page.html" %}
+
+{% block title %}{{ u.get_username() }} | {% trans %}Achievements{% endtrans %}{% endblock %}
+{% block module_subtitle %}{{ u.get_username() }}{% endblock %}
+
+{% block module_content %}
+<div id="achievements_user_box">
+	<span class="content-list-item-name">
+	<!-- let's save ourselfes some typing -->
+	{% set picture = u.get_contact().get_picture() %}
+	<div class="contact-picture-frame">
+		{% if picture %}
+			<a href="{% url identities_user_view u.id %}">
+				<img class="contact-picture" src="{{ picture|htsafe }}" alt="" align="left"/>
+			</a>
+		{% else %}
+			<a href="{% url identities_user_view u.id %}">
+				<img class="contact-picture" src="/static/messaging/pic.png" alt="" align="left"/>
+				</a>
+		{% endif %}
+	</div>
+	<h4>{{ u }}</h4><br/>
+	</span>
+</div>
+<h3>{{ u.get_username() }} {% trans %}has been awarded the following Achievements:{% endtrans %}</h3>
+{% if achievements %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<ul class="mass-form">
+			<!-- let the view know that this is a massform -->
+			<input type="hidden" name="massform" value="massform"/>
+			{% if user.get_profile().is_admin(module_name='achievements') %}
+				<!-- 'select all' checkbox -->
+				<input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control"/>
+			{% endif %}
+			{{ massform.as_ul()|htsafe }}
+			<li>
+				<input type="submit" value="{% trans %}Save{% endtrans %}"/>
+			</li>
+			{{ achievements_achievements_list(paginate(achievements)) }}
+			{{ pager(achievements) }}
+		</ul>
+	</form>
+{% endif %}
+{% endblock %}

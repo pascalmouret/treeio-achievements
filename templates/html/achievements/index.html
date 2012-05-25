@@ -1,0 +1,38 @@
+<!--
+This Template renders a list of users (see tags/user_list.html).
+Some things are only rendered if the user is admin.
+-->
+{% extends "html/achievements/page.html" %}
+
+{% block title %}{% trans %}Achievements{% endtrans %}{% endblock %}
+{% block module_subtitle %}Users{% endblock %}
+
+{% block module_topmenu %}
+	{% if user.get_profile().is_admin(module_name='achievements') %}
+		<a href="{% url achievements_achievement_add %}" class="top-menu add-link">
+			{% trans %}Award Achievement{% endtrans %}
+		</a>
+	{% endif %}
+{% endblock %}
+
+{% block module_content %}
+	{% if users %}
+		<form action="" method="post">
+			{% csrf_token %}
+			<ul class="mass-form">
+				<!-- make sure we remember that there is a massform -->
+				<input type="hidden" name="massform" value="massform" />
+				<!-- the "select-all" checkbox -->
+				{% if user.get_profile().is_admin(module_name='achievements') %}
+					<input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+				{% endif %}
+				{{ massform.as_ul()|htsafe }}
+				<li>
+					<input type="submit" value="{% trans %}Save{% endtrans %}" />
+				</li>
+				{{ achievements_user_list(paginate(users)) }}
+				{{ pager(users) }}
+			</ul>
+		</form>
+	{% endif %}
+{% endblock %}
