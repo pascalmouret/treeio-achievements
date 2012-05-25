@@ -82,3 +82,30 @@ def achievements_prototypes_list(context, prototypes, skip_group=False):
                                response_format=response_format))
 
 register.object(achievements_prototypes_list)
+
+
+@contextfunction
+def icon_line(context, user=None, size=25):
+    """
+    Print a line with a certain amount off achievement-icons.
+
+    Arguments:
+    context -- the current Context object, supplied by the decorator
+    user -- which user, defaults to the active account
+    size -- how many icons should be displayed
+    """
+    request = context['request']
+    if not user:
+        user = request.user
+
+    response_format = 'html'
+    if 'response_format' in context:
+        response_format = context['response_format']
+
+    achievements = user.achievements.all()[:size]
+
+    return Markup(render_to_string('achievements/tags/icon_line', {'achievements': achievements},
+                                   context_instance=RequestContext(request),
+                                   response_format=response_format))
+
+register.object(icon_line)

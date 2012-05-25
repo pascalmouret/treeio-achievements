@@ -27,7 +27,7 @@ It has permission-checks so certain interface-elements are only visible to admin
 		</div>
 		<a href="{% url achievements_achievement_detail a.id %}">{{ a.prototype.title }}</a><br />
 		<a href="{% url achievements_achievement_detail a.id %}" class="small lighter">
-			<i>{% trans %}since:{% endtrans%} {{ a.timestamp }}</i>
+			<i>{% trans %}since:{% endtrans%} {{ a.timestamp.strftime('%H:%M - %d. %B %Y') }}</i>
 		</a>
 	</span>
 	<span class="content-list-item-actions">

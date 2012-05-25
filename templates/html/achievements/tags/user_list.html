@@ -28,7 +28,7 @@ It has permission-checks so certain interface-elements are only visible to admin
 		</div>
 		<a href="{% url achievements_user_view u.id %}">{{ u }}</a><br />
 		<a href="{% url achievements_user_view u.id %}" class="small lighter">
-			<i>{{ u.achievements }} {% trans %}Achievements{% endtrans %}</i>
+			{{ icon_line(user=u) }}
 		</a>
 	</span>
 	<span class="content-list-item-actions">

@@ -1,0 +1,11 @@
+<ul class="achievements_icon_list">
+	{% for a in achievements %}
+		<li>
+			{% if a.icon %}
+				<img src="{{ a.icon.url }}" alt="" />
+			{% else %}
+				<img src="/static/messaging/pic.png" alt="" />
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>

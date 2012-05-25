@@ -17,10 +17,17 @@ template. It mostly defines blocks to be used, which makes writing the other eas
 	#achievements_user_box .contact-picture {
 		min-height: 64px;
 		min-width: 64px;
+		float: left;
 	}
 
-	#achievements_user_box h4 {
+	#achievements_user_box .contact-picture-frame {
+		height: 64px;
+		width: 64px;
+	}
+
+	#achievements_user_box #info_box {
 		margin-left: 90px;
+		height: 100%;
 	}
 
 	#achievements_proto_head .badge {
@@ -44,6 +51,26 @@ template. It mostly defines blocks to be used, which makes writing the other eas
 	#achievements_proto_head .description {
 		padding: 10px;
 		margin-left: 140px;
+	}
+
+	.achievements_icon_list {
+		margin-top: 2px;
+		margin-bottom: 2px;
+		padding-left: 0;
+		list-style-image: none;
+		display: block;
+	}
+
+	.achievements_icon_list li {
+		padding-left: 0;
+		padding-right: 0.3em;
+		display: inline-block;
+		margin: 0;
+	}
+
+	.achievements_icon_list img {
+		height: 15px;
+		width: 15px;
 	}
 	-->
 </style>

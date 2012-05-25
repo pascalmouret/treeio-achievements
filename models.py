@@ -36,7 +36,7 @@ class Prototype(Object):
 
 class Achievement(Object):
     prototype = models.ForeignKey(Prototype)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='achievements')
     text = models.CharField(max_length=512, default='')
     timestamp = models.DateTimeField(auto_now_add=True)
 

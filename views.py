@@ -101,8 +101,6 @@ def index(request, response_format='html'):
     response_format -- defines which format the response should be
     """
     users = User.objects.all()
-    for user in users:
-        user.achievements = Achievement.objects.filter(user=user).count()
 
     context = _get_default_context(request, MassActionUserForm)
     context.update({'users': users})
