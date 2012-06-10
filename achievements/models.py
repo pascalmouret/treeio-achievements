@@ -35,6 +35,7 @@ class Prototype(Object):
 
 
 class Achievement(Object):
+    """ A entity used to give an Achievement to a user. """
     prototype = models.ForeignKey(Prototype)
     user = models.ForeignKey(User, related_name='achievements')
     text = models.CharField(max_length=512, default='')

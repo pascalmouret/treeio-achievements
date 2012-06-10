@@ -16,7 +16,7 @@ It has permission-checks so certain interface-elements are only visible to admin
 	<div class="contact-picture-frame">
 		{% if picture %}
 			<a href="{% url identities_user_view u.id %}">
-				<img class="contact-picture" src="{{ picture|htsafe }}" alt="" align="left"/>
+				<img class="contact-picture" src="{% if picture %}{{ picture|htsafe }}{% endif %}" alt="" align="left"/>
 			</a>
 		{% else %}
 			<a href="{% url identities_user_view u.id %}">
